@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] private Button tapToStartBtn;
+    // para toplamayı yap
     private void Awake()
     {
         Application.targetFrameRate = 60;

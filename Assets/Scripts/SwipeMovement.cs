@@ -1,4 +1,8 @@
+using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class SwipeMovement : MonoSingleton<SwipeMovement>
 {
@@ -43,6 +47,7 @@ public class SwipeMovement : MonoSingleton<SwipeMovement>
             targetPos = Mathf.Clamp(targetPos, bounds.x, bounds.y);
 
             transform.localPosition = new Vector3(targetPos, localPos.y, localPos.z);
+
         }
 
     }
