@@ -12,6 +12,8 @@ public class GameplayController : MonoSingleton<GameplayController>
         IsActive = true;
         Player.Instance.splineFollower.followSpeed = Player.Instance.MoveSpeed;
         Player.Instance.ChangeCurrentWealthState(WealthState.Poor);
+        GameManager.Instance.ShowHuds();
+        GameManager.Instance.SetCameraPos();
     }
 
     public void RetryGameplay()
