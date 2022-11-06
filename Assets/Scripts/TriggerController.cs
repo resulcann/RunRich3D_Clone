@@ -1,18 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 public class TriggerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private int cashValue = 2, wineBottleValue = -5, redGateValue = -20, greenGateValue = 20;
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
+        var otherGo = other.gameObject;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (otherGo.CompareTag("Cash"))
+        {
+            GameManager.Instance.UpdateMoney(cashValue);
+            otherGo.transform.parent.GetComponentInChildren<ParticleSystem>().Play();
+            otherGo.SetActive(false);
+        }
+
+        if (otherGo.CompareTag("WineBottle"))
+        {
+            GameManager.Instance.UpdateMoney(wineBottleValue);
+            otherGo.SetActive(false);
+        }
+
+        if (otherGo.CompareTag("RedGate"))
+        {
+            GameManager.Instance.UpdateMoney(redGateValue);
+        }
+        if (otherGo.CompareTag("GreenGate"))
+        {
+            GameManager.Instance.UpdateMoney(greenGateValue);
+        }
     }
 }

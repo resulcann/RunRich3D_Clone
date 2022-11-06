@@ -83,6 +83,6 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _InnerColor: {r: 0.24096651, g: 0.6480326, b: 0.8962264, a: 0}
     - _OuterColor: {r: 0.125534, g: 0.8406136, b: 0.8584906, a: 0}
-    - _TopColor: {r: 0.10849059, g: 0.9700097, b: 1, a: 0}
+    - _TopColor: {r: 0.12941177, g: 1, b: 1, a: 0}
     - _Up: {r: 0, g: 1, b: 0.1, a: 0}
   m_BuildTextureStacks: []

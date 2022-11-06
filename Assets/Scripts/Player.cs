@@ -27,17 +27,15 @@ public class Player : MonoSingleton<Player>
     {
         splineFollower = GetComponent<SplineFollower>();
         splineFollower.followSpeed = 0;
-    }
-    
-    private void Start()
-    {
         ChangeCurrentWealthState(WealthState.None);
     }
     
     public void ChangeCurrentWealthState(WealthState newWealthState)
     {
         var oldWealthState = CurrentWealthState;
+        if (oldWealthState == newWealthState) return;
         CurrentWealthState = newWealthState;
         OnWealthsChanged?.Invoke(oldWealthState, CurrentWealthState);
+        
     }
 }
