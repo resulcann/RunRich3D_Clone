@@ -1,20 +1,22 @@
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(Level))]
-public class LevelInspector : Editor
+namespace Level
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(Level))]
+    public class LevelInspector : Editor
     {
-        Level level = (Level)target;
-        EditorUtility.SetDirty(level);
+        public override void OnInspectorGUI()
+        {
+            var level = (Level)target;
+            EditorUtility.SetDirty(level);
 
-        level.levelIndex = EditorGUILayout.IntField("Level Index", level.levelIndex);
-        level.levelPrefab = EditorGUILayout.ObjectField("Level Prefab To Spawn", level.levelPrefab,typeof(GameObject), true) as GameObject;
+            level.levelIndex = EditorGUILayout.IntField("Level Index", level.levelIndex);
+            level.levelPrefab = EditorGUILayout.ObjectField("Level Prefab To Spawn", level.levelPrefab,typeof(GameObject), true) as GameObject;
         
 
-        EditorGUILayout.BeginHorizontal("Box");
+            EditorGUILayout.BeginHorizontal("Box");
             if(GUILayout.Button("Create Level"))
             {
                 level.CreateLevel();
@@ -24,8 +26,9 @@ public class LevelInspector : Editor
             {
                 level.DestroyLevel();
             }
-        EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndHorizontal();
 
+        }
     }
 }
 #endif

@@ -1,55 +1,58 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+namespace Level
 {
-    public static LevelManager Instance { get; private set; }
-    public List<Level> Levels;
-    public int currentLevelIndex = 0;
-    [HideInInspector] public List<GameObject> allSpawnedLadders;
+    public class LevelManager : MonoBehaviour
+    {
+        public List<Level> levels;
+        public int currentLevelIndex;
+        [HideInInspector] public bool isRandom;
 
-    void Awake() 
-    {
-        Instance = this;
-    }
-    void Start() 
-    {
-        SpawnCurrentLevel();
-    }
-    
-    public void SpawnCurrentLevel()
-    {
-        Levels[currentLevelIndex].CreateLevel();
-    }
-
-    public void NextLevel()
-    {
-        Levels[currentLevelIndex].DestroyLevel();
-        if(currentLevelIndex == 2)
+        private void Awake()
         {
-            currentLevelIndex = Random.Range(0,2);
-        }
-        else{
-            currentLevelIndex += 1;
-        }
+            isRandom = false;
+            if (currentLevelIndex == levels.Count-1) isRandom = true;
         
-        Levels[currentLevelIndex].CreateLevel();
-        DestroyAllLadder();
-    }
-    public void RetryLevel()
-    {
-        Levels[currentLevelIndex].DestroyLevel();
-        Levels[currentLevelIndex].CreateLevel();
-        DestroyAllLadder();
-    }
-
-    public void DestroyAllLadder()
-    {
-        for (int i = 0; i < allSpawnedLadders.Count; i++)
-        {
-            Destroy(allSpawnedLadders[i]);
         }
-        allSpawnedLadders.Clear();
+
+        private void Start()
+        {
+            SpawnCurrentLevel();
+        }
+
+        private void SpawnCurrentLevel()
+        {
+            levels[currentLevelIndex].CreateLevel();
+        }
+
+        public void NextLevel()
+        {
+            if (isRandom == false)
+            {
+                levels[currentLevelIndex].DestroyLevel();
+                currentLevelIndex++;
+                levels[currentLevelIndex].CreateLevel();
+                if (currentLevelIndex == levels.Count-1) isRandom = true;
+            }
+            else
+            {
+                var randomValue = Random.Range(0, levels.Count);
+                levels[currentLevelIndex].DestroyLevel();
+                while (randomValue == currentLevelIndex) randomValue = Random.Range(0, levels.Count);
+                currentLevelIndex = randomValue;
+                levels[currentLevelIndex].CreateLevel();
+            }
+        
+            GameplayController.Instance.StartGameplay();
+
+        }
+        public void RetryLevel()
+        {
+            levels[currentLevelIndex].DestroyLevel();
+            levels[currentLevelIndex].CreateLevel();
+            GameplayController.Instance.StartGameplay();
+        }
+
     }
 }

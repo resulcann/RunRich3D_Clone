@@ -27,5 +27,11 @@ public class TriggerController : MonoBehaviour
         {
             GameManager.Instance.UpdateMoney(greenGateValue);
         }
+
+        if (otherGo.CompareTag("Finish"))
+        {
+            GameplayController.Instance.FinishGameplay(true);
+            GetComponent<WealthTransitions>().FinishDance(Player.Instance.CurrentWealthState);
+        }
     }
 }

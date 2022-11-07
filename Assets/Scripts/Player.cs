@@ -16,13 +16,13 @@ public class Player : MonoSingleton<Player>
 
     public float MoveSpeed
     {
-        get { return moveSpeed; }
-        set { moveSpeed = value; }
+        get => moveSpeed;
+        set => moveSpeed = value;
     }
     public WealthState CurrentWealthState { get; private set; }
 
-    public event Action<WealthState /*Old*/, WealthState /*New*/> OnWealthsChanged;
-    
+    public event Action<WealthState /*Old*/, WealthState /*New*/> OnWealthChanged;
+
     private void Awake()
     {
         splineFollower = GetComponent<SplineFollower>();
@@ -35,7 +35,7 @@ public class Player : MonoSingleton<Player>
         var oldWealthState = CurrentWealthState;
         if (oldWealthState == newWealthState) return;
         CurrentWealthState = newWealthState;
-        OnWealthsChanged?.Invoke(oldWealthState, CurrentWealthState);
+        OnWealthChanged?.Invoke(oldWealthState, CurrentWealthState);
         
     }
 }

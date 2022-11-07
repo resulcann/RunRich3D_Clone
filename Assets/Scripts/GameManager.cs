@@ -1,5 +1,3 @@
-using System;
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,48 +8,41 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private Button tapToStartBtn;
     [SerializeField] private Slider wealthBar;
     [SerializeField] private TextMeshProUGUI totalMoneyText;
+    [HideInInspector] public Canvas playerCanvas;
     public int totalMoney;
     public GameObject popUpMoney;
-    private Canvas _playerCanvas;
+    
 
+    public Slider WealthBar
+    {
+        get => wealthBar;
+        set => wealthBar = value;
+    }
     public Color32 WealthBarColor
     {
-        get
-        {
-            return wealthBar.fillRect.GetComponent<Image>().color;
-        }
-        set
-        {
-            wealthBar.fillRect.GetComponent<Image>().color = value;
-        }
+        get => wealthBar.fillRect.GetComponent<Image>().color;
+        set => wealthBar.fillRect.GetComponent<Image>().color = value;
     }
-
-    public static event Action OnMoneyCollected;
     private void Awake()
     {
         Application.targetFrameRate = 60;
-        _playerCanvas = wealthBar.GetComponentInParent<Canvas>();
     }
 
     private void Start()
     {
-        HideHuds();
+        HudVisibility(false);
+        TapToStartButtonShow(true);
     }
 
-    public void HideTapToStartButton()
+    public void TapToStartButtonShow(bool value)
     {
-        tapToStartBtn.gameObject.SetActive(false);
+        tapToStartBtn.gameObject.SetActive(value);
     }
 
-    public void HideHuds()
+    public void HudVisibility(bool value)
     {
-        totalMoneyText.transform.parent.gameObject.SetActive(false);
-        _playerCanvas.enabled = false;
-    }
-    public void ShowHuds()
-    {
-        totalMoneyText.transform.parent.gameObject.SetActive(true);
-        _playerCanvas.enabled = true;
+        totalMoneyText.transform.parent.gameObject.SetActive(value);
+        playerCanvas.enabled = value;
     }
 
     public void UpdateMoney(int value)
@@ -66,13 +57,11 @@ public class GameManager : MonoSingleton<GameManager>
         if( wealthBar.value >= wealthBar.minValue && wealthBar.value <= wealthBar.maxValue/4) Player.Instance.ChangeCurrentWealthState(WealthState.Poor);
         else if(wealthBar.value > wealthBar.maxValue/4 && wealthBar.value <= wealthBar.maxValue/2) Player.Instance.ChangeCurrentWealthState(WealthState.Average);
         else if(wealthBar.value > wealthBar.maxValue/2 && wealthBar.value <= wealthBar.maxValue) Player.Instance.ChangeCurrentWealthState(WealthState.Rich);
-        
-        OnMoneyCollected?.Invoke();
     }
 
-    public void MoneyPopUp(string text,int value)
+    private void MoneyPopUp(string text,int value)
     {
-        var popUp = Instantiate(popUpMoney, Vector3.zero, Quaternion.identity, _playerCanvas.transform);
+        var popUp = Instantiate(popUpMoney, Vector3.zero, Quaternion.identity, playerCanvas.transform);
         if (value > 0)
         {
             popUp.GetComponentInChildren<TextMesh>().color = new Color32(49, 255, 45, 255);
