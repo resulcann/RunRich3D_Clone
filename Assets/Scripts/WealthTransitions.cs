@@ -7,7 +7,7 @@ public class WealthTransitions : MonoBehaviour
     [SerializeField] private GameObject poorMesh, averageMesh, richMesh;
     [SerializeField] private TextMeshProUGUI poorText, averageText, richText;
     [SerializeField] private ParticleSystem transitionParticle;
-    [SerializeField] private Slider wealthBar;
+    public Canvas playerCanvas;
    
     
     private Animator _animator;
@@ -24,8 +24,7 @@ public class WealthTransitions : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.WealthBar = this.wealthBar;
-        GameManager.Instance.playerCanvas = this.wealthBar.GetComponentInParent<Canvas>();
+        
     }
     
     private void Player_OnWealthStateChanged(WealthState oldWealthState, WealthState newWealthState)

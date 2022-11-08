@@ -30,7 +30,6 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
-        HudVisibility(false);
         TapToStartButtonShow(true);
     }
 
@@ -41,6 +40,9 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void HudVisibility(bool value)
     {
+        
+        playerCanvas = FindObjectOfType<WealthTransitions>().playerCanvas;
+        wealthBar = playerCanvas.GetComponentInChildren<Slider>();
         totalMoneyText.transform.parent.gameObject.SetActive(value);
         playerCanvas.enabled = value;
     }

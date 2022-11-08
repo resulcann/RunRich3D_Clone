@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Level
 {
@@ -19,6 +20,7 @@ namespace Level
         private void Start()
         {
             SpawnCurrentLevel();
+            GameManager.Instance.HudVisibility(false);
         }
 
         private void SpawnCurrentLevel()
